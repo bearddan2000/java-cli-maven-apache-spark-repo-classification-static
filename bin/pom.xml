@@ -1,0 +1,73 @@
+<?xml version="1.0" ?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>example</groupId>
+   <artifactId>apache-spark</artifactId>
+   <version>0.0.1</version>
+   <packaging>jar</packaging>
+   <name>Apache-Spark</name>
+   <properties>
+      <java.version>11</java.version>
+      <maven.compiler.version>3.7.0</maven.compiler.version>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <surefire.version>3.0.0-M5</surefire.version>
+   </properties>
+
+   <dependencies>
+       <dependency>
+           <groupId>org.apache.xbean</groupId>
+           <artifactId>xbean-asm6-shaded</artifactId>
+           <version>4.10</version>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.spark</groupId>
+           <artifactId>spark-core_2.11</artifactId>
+           <version>2.4.1</version>
+           <exclusions>
+               <exclusion>
+                   <groupId>org.apache.xbean</groupId>
+                   <artifactId>xbean-asm6-shaded</artifactId>
+               </exclusion>
+           </exclusions>
+       </dependency>
+   </dependencies>
+
+   <build>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>${maven.compiler.version}</version>
+            <configuration>
+               <encoding>${project.build.sourceEncoding}</encoding>
+               <source>${java.version}</source>
+               <target>${java.version}</target>
+            </configuration>
+         </plugin>
+         <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>3.3.0</version>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>single</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <descriptorRefs>
+                    <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+            </configuration>
+            </plugin>
+      </plugins>
+   </build>
+
+    <repositories>
+        <repository>
+            <id>SparkPackagesRepo</id>
+            <url>https://repos.spark-packages.org</url>
+        </repository>
+    </repositories>
+</project>
